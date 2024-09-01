@@ -4,12 +4,12 @@ This project is an implementation of the 8-puzzle problem for my AI class. It in
 
 ## Structure
 - `src/`: Source code.
-- `notebooks/`: Jupyter Notebook showcasing the implementation.
+- `documentation/`: 
 - `tests/`: Test files including command and expected output.
-- `docs/`: Additional documentation.
+- `log`: command line inputs
 
 ## How to Run
 1. Clone the repository.
-2. Navigate to the `src/` directory.
-3. Run the implementation via command line:
-  
+
+## API
+Puzzle : A 3x3 puzzle that has values 0-8 included, the 0 value being the free space. The values will be stored in an array with the first 3 values being the values from left to right of the first row of the puzzle, then second, then third.
