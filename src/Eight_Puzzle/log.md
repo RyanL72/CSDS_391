@@ -9,13 +9,19 @@ pip freeze > requirements.txt
 pip install sphinx
 sphinx-quickstart
 
-go to config.py and import os, import sys, and sys.path.insert(0, os.path.abspath(r'C:\Users\Ryan\CSDS_391\Eight_Puzzle\src'))
+go to config.py and import os, import sys, and sys.path.insert(0, os.path.abspath('../../src'))
 
-go to index.rst file and add modules under Contents
+go to index.rst
+.. toctree::
+   :maxdepth=2
+   :caption: Contents:
 
-in documentation directory  
-sphinx-apidoc -o . ..
-./make.bat html
+   Eight_Puzzle
+
+
+ 
+sphinx-apidoc -o documentation/source/ src/  
+.\make.bat html
 
 ------
 
