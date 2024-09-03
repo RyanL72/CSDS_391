@@ -143,7 +143,7 @@ class Eight_Puzzle:
         raise ValueError("No Zero Value")
 
     def getZeroPosition(self):
-        return self.__x, self.__y
+        return self.__y, self.__x
 
     def printPuzzleConfiguration(self):
         for row in self.__puzzleConfiguration:
@@ -180,12 +180,12 @@ if __name__ == "__main__":
     print(newEightPuzzle.getZeroPosition())
     print("---------")
 
-    # newEightPuzzle.move("Up")
+    newEightPuzzle.move("Up")
     newEightPuzzle.printState()
     print(newEightPuzzle.getZeroPosition())
     print("---------")
 
-    # newEightPuzzle.move("Up")
+    newEightPuzzle.move("Up")
     newEightPuzzle.printState()
     print(newEightPuzzle.getZeroPosition())
     print("---------")
