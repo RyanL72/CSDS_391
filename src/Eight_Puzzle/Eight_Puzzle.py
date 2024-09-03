@@ -1,3 +1,5 @@
+import random
+
 class Eight_Puzzle:
     
     def __init__(self, puzzleConfiguration=[[0,1,2],[3,4,5],[6,7,8]]):
@@ -131,6 +133,18 @@ class Eight_Puzzle:
         elif position == (2, 2):
             return ["Left", "Up"]
         
+    def scrambleState(self, n):
+        self.setState([[0,1,2],[3,4,5],[6,7,8]])
+        count=0
+        while count < n:
+            self.printState()
+            print("-------")
+            validMoves = self.getValidMoves()
+            randomValidMoveNumber = random.randint(0,len(validMoves)-1)
+            randomValidMove = validMoves[randomValidMoveNumber]
+            self.move(randomValidMove)
+            count = count + 1
+        
     # Helper Functions
         
     def updateZeroPosition(self):
@@ -153,43 +167,12 @@ class Eight_Puzzle:
 if __name__ == "__main__":
 
     newEightPuzzle = Eight_Puzzle()
-
-
-    newEightPuzzle.setState([[0,1,2],[3,4,5],[6,7,8]])
     newEightPuzzle.printState()
-    print(newEightPuzzle.getZeroPosition())
+    
+    print("-------")
 
-    print("---------")
-    newEightPuzzle.move("Right")
-    newEightPuzzle.printState()
-    print(newEightPuzzle.getZeroPosition())
-    print("---------")
-
-    newEightPuzzle.move("Down")
-    newEightPuzzle.printState()
-    print(newEightPuzzle.getZeroPosition())
-    print("---------")
-
-    newEightPuzzle.move("Left")
-    newEightPuzzle.printState()
-    print(newEightPuzzle.getZeroPosition())
-    print("---------")
-
-    newEightPuzzle.move("Down")
-    newEightPuzzle.printState()
-    print(newEightPuzzle.getZeroPosition())
-    print("---------")
-
-    newEightPuzzle.move("Up")
-    newEightPuzzle.printState()
-    print(newEightPuzzle.getZeroPosition())
-    print("---------")
-
-    newEightPuzzle.move("Up")
-    newEightPuzzle.printState()
-    print(newEightPuzzle.getZeroPosition())
-    print("---------")
-
+    newEightPuzzle.scrambleState(100)
+    
 
 
 
