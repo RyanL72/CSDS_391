@@ -3,6 +3,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 .\venv\Scripts\Activate.ps1
 
 deactivate 
+pip install -r requirements
 pip freeze > requirements.txt
 
 pip install sphinx
@@ -23,3 +24,5 @@ C:\Users\Ryan\CSDS_391\Eight_Puzzle\documentation\make.bat html
 
 pip install sphinx-autobuild
 sphinx-autobuild . ..
+
+>>> from Eight_Puzzle import Eight_Puzzle
