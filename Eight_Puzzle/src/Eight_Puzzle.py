@@ -7,15 +7,23 @@ class Eight_Puzzle:
         self.__x = None
         self.__y = None
 
-        for i, row in enumerate(puzzleConfiguration):
+        self.updateZeroPosition()
+        self.checkZero()
+
+    def checkZero(self):
+        for i, row in enumerate(self.__puzzleConfiguration):
             for j, row in enumerate(row):
-                if puzzleConfiguration[i][j] == 0:
+                if self.__puzzleConfiguration[i][j] == 0:
+                    print(f"{i} {j}")
+                    return
+        raise ValueError("Invalid puzzle configuration: No zero value found.")
+        
+    def updateZeroPosition(self):
+        for i, row in enumerate(self.__puzzleConfiguration):
+            for j, row in enumerate(row):
+                if self.__puzzleConfiguration[i][j] == 0:
                     self.__x = i
                     self.__y = j
-
-        # Check if x and y value for zero were found
-        if self.__x is None or self.__y is None:
-            raise ValueError("Invalid puzzle configuration: No zero value found.")
 
     def getZeroPosition(self):
         return self.__x, self.__y
@@ -27,12 +35,25 @@ class Eight_Puzzle:
 
     def setState(self, newPuzzleConfiguration):
         self.__puzzleConfiguration = newPuzzleConfiguration
+        self.checkZero()
+        for i, row in enumerate(self.__puzzleConfiguration):
+            for j, row in enumerate(row):
+                if self.__puzzleConfiguration[i][j] == 0:
+                    self.__x = i
+                    self.__y = j
+
 
     def printState(self):
         for row in self.__puzzleConfiguration:
             formattedRow = [" " if element == 0 else str(element) for element in row]
             print(" ".join(formattedRow))
     
+    '''
+    def move(self, direction):
+        if direction=="up":
+            zeroPosition = self.getZeroPosition
+            if()
+    '''
 
 if __name__ == "__main__":
 
