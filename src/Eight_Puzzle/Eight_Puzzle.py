@@ -5,13 +5,13 @@ class Eight_Puzzle:
         self.__x = None
         self.__y = None
         self.updateZeroPosition()
-        self.checkZero()
+
 
 
     def setState(self, newPuzzleConfiguration):
-        self.checkZero()
         self.__puzzleConfiguration = newPuzzleConfiguration
         self.updateZeroPosition()
+        print(f"Set Zero to {self.__x} {self.__y}")
         
         
 
@@ -24,8 +24,9 @@ class Eight_Puzzle:
     def move(self, direction):
         validMoves = self.getValidMoves()
         print(f"The valid moves are: {validMoves}")
-        for x in validMoves:
-            if direction == x:
+        print(f"Before this move, the current zero is at {self.__x} {self.__y}")
+        if direction in validMoves:
+                
                 currentX = self.__x
                 currentY = self.__y
 
@@ -37,6 +38,7 @@ class Eight_Puzzle:
                     newState[currentY][swapPosition] = newState[currentY][currentX]
                     newState[currentY][currentX] = swapPtr
                     self.setState(newState)
+                    return
 
                 elif direction == "Down":
                     print("Moving Down")
@@ -45,8 +47,8 @@ class Eight_Puzzle:
                     swapPtr = newState[swapPosition][currentX]
                     newState[swapPosition][currentX] = newState[currentY][currentX]
                     newState[currentY][currentX] = swapPtr
-                    print(self.getZeroPosition())
                     self.setState(newState)
+                    return
 
                 elif direction == "Left":
                     print("Moving Left")
@@ -56,6 +58,7 @@ class Eight_Puzzle:
                     newState[currentY][swapPosition] = newState[currentY][currentX]
                     newState[currentY][currentX] = swapPtr
                     self.setState(newState)
+                    return
 
                 elif direction == "Up":
                     print("Moving Up")
@@ -65,11 +68,14 @@ class Eight_Puzzle:
                     newState[swapPosition][currentX] = newState[currentY][currentX]
                     newState[currentY][currentX] = swapPtr
                     self.setState(newState)
+                    return
 
+        raise ValueError(f"The Current Position is {self.getZeroPosition()} and we can't go {direction}")
                     
 
     def getValidMoves(self):
         position = self.getZeroPosition()
+        print(f"Our Zero Position is {position}")
         if position == (0, 0):
             return ["Right", "Down"]
         elif position == (1, 0):
@@ -90,22 +96,16 @@ class Eight_Puzzle:
             return ["Left", "Up"]
         
     # Helper Functions
-    def checkZero(self):
-        for i, row in enumerate(self.__puzzleConfiguration):
-            for j, row in enumerate(row):
-                if self.__puzzleConfiguration[i][j] == 0:
-                    self.__x = i
-                    self.__y = j
-                    return
-        raise ValueError("Invalid puzzle configuration: No zero value found.")
         
     def updateZeroPosition(self):
         for i, row in enumerate(self.__puzzleConfiguration):
-            for j, row in enumerate(row):
-                if self.__puzzleConfiguration[i][j] == 0:
+            for j, element in enumerate(row):
+                if element == 0:
                     self.__x = i
                     self.__y = j
                     print(f"The new Zero Position is {self.getZeroPosition()}")
+                    return
+        raise ValueError("No Zero Value")
 
     def getZeroPosition(self):
         return self.__x, self.__y
@@ -127,14 +127,17 @@ if __name__ == "__main__":
 
     print("---------")
 
-    newEightPuzzle.setState([[0,1,2],[3,4,5],[6,7,8]])
+    newEightPuzzle.setState([[1,2,3],[4,0,5],[6,7,8]])
     newEightPuzzle.printState()
 
-    newEightPuzzle.move("Down")
+    newEightPuzzle.move("Right")
     newEightPuzzle.printState()
 
-    newEightPuzzle.move("Left")
+    newEightPuzzle.move("Up")
     newEightPuzzle.printState()
+
+
+
 
 
 
