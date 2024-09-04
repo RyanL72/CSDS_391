@@ -1,0 +1,11 @@
+setState 1 2 3 4 0 5 6 7 8
+printState
+move Left
+printState
+move up
+printState
+move uP
+scrambleState 1
+printState
+move right
+printState
