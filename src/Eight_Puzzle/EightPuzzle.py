@@ -233,6 +233,11 @@ class EightPuzzle:
 
 
     def cmd(self, command):
+        
+        command = command.strip()
+        if not command or command.startswith('#') or command.startswith('//'):
+            return  
+        
         parts = command.split()
         if not parts:
             print("Error: invalid command")
@@ -259,6 +264,12 @@ class EightPuzzle:
                 self.scrambleState(int(parts[1]))
             except:
                 print("Error: invalid scramble number")
+        elif parts[0] == "solveDFS":
+            max_nodes = int(parts[1]) if len(parts) > 1 else 1000  # default max_nodes = 1000
+            self.solveDFS(max_nodes=max_nodes)
+        elif parts[0] == "solveBFS":
+            max_nodes = int(parts[1]) if len(parts) > 1 else 1000  # default max_nodes = 1000
+            self.solveBFS(max_nodes=max_nodes)
         else:
             print(f"Error: invalid command: {command}")
             
@@ -314,7 +325,7 @@ if __name__ == "__main__":
     puzzle2 = EightPuzzle()
 
     # Scramble the puzzle 
-    scramble_moves = 10
+    scramble_moves = 20
     print(f"Scrambling the puzzle with {scramble_moves} random moves...")
     puzzle1.scrambleState(scramble_moves)
     puzzle2.scrambleState(scramble_moves)

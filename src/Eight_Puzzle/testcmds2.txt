@@ -1,0 +1,23 @@
+# Scramble the puzzle with 10 moves
+scrambleState 10
+
+// Print the scrambled puzzle state
+printState
+
+# Solve the puzzle using DFS with max_nodes = 1000
+solveDFS 1000
+
+// Print the puzzle state after DFS
+printState
+
+# Scramble the puzzle again with 10 moves
+scrambleState 10
+
+# Print the scrambled puzzle state again
+printState
+
+// Solve the puzzle using BFS with max_nodes = 1000
+solveBFS 1000
+
+# Print the puzzle state after BFS
+printState
