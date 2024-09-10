@@ -4,10 +4,6 @@
 
 - [8-Puzzle Project](./8_Puzzle/README.md)
   - Implementation of the 8-puzzle problem including state representation, command interface, and testing.
+  - Implementation of Breadth First Search and Depth First Search
 
-## Running Projects
 
-### Powershell
-python -m venv venv  
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process  
-.\venv\Scripts\Activate.ps1
