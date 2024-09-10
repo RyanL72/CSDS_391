@@ -1,10 +1,13 @@
 import random
+from collections import deque
 
 class EightPuzzle:
     
     def __init__(self, puzzleConfiguration=[[0,1,2],[3,4,5],[6,7,8]]):
         self.__puzzleConfiguration = puzzleConfiguration
         '''
+        Assignment 1
+
         puzzleConfiguration[y][x]
 
         .------------------------> (X)
@@ -151,6 +154,84 @@ class EightPuzzle:
         #print(f"count: {count}")
         #self.printState()
 
+    '''
+    Assignment 2 
+    '''
+
+    def solveDFS(self, max_nodes=1000):
+        stack = [(self.copy(), [])]  
+        nodes_explored = 0
+        visited = set()
+        
+
+        while stack:
+            current_state, path = stack.pop()
+            nodes_explored += 1
+
+            # use Set to keep track of where I already visited
+            state_key = tuple(tuple(row) for row in current_state.__puzzleConfiguration)
+            
+            str_cur_state = ' '.join(str(piece) for line in current_state.__puzzleConfiguration for piece in line)
+            visited.add(str_cur_state)
+            if current_state.isSolved():
+                print(f"Solved with path: {path}")
+                return path
+
+            if nodes_explored >= max_nodes:
+                print("Node limit reached, solution not found")
+                return None
+
+            valid_moves = current_state.getValidMoves()
+            for move in valid_moves:
+                new_state = current_state.copy()
+                new_state.move(move)
+                new_state_string = ' '.join(str(piece) for line in new_state.__puzzleConfiguration for piece in line)
+                if new_state_string not in visited:
+                    stack.append((new_state, path + [move]))
+
+        print("No solution found")
+        return None
+    
+    def solveBFS(self, max_nodes=1000):
+        queue = deque([(self.copy(), [])])  # Queue with the initial state and empty path
+        nodes_explored = 0
+        visited = set()  
+
+        # Add the initial state's string representation to the visited set
+        initial_state_str = ' '.join(str(piece) for line in self.__puzzleConfiguration for piece in line)
+        visited.add(initial_state_str)
+        
+        while queue:
+            current_state, path = queue.popleft()  # Get the current state and path from the queue
+            nodes_explored += 1
+
+            if current_state.isSolved():
+                print(f"Solved with path: {path}")
+                return path
+
+            if nodes_explored >= max_nodes:
+                print("Node limit reached, solution not found")
+                return None
+
+            valid_moves = current_state.getValidMoves()
+            for move in valid_moves:
+                new_state = current_state.copy()  # Create a copy of the current state
+                new_state.move(move)  # Apply the move to the new state
+
+                # Convert the new state to a string for the visited set
+                new_state_str = ' '.join(str(piece) for line in new_state.__puzzleConfiguration for piece in line)
+                
+                # Check if this new state has been visited before
+                if new_state_str not in visited:
+                    visited.add(new_state_str)  
+                    queue.append((new_state, path + [move]))  
+
+        print("No solution found")
+        return None
+    
+
+
+
     def cmd(self, command):
         parts = command.split()
         if not parts:
@@ -217,10 +298,44 @@ class EightPuzzle:
         for row in self.__puzzleConfiguration:
             print(" ".join(map(str, row)))
 
+    def isSolved(self):
+        if self.__puzzleConfiguration == [[0,1,2], [3,4,5],[6,7,8]]:
+            return True
+        else:
+            return False
+    
+    def copy(self):
+        return EightPuzzle([row[:] for row in self.__puzzleConfiguration])
 
 
 if __name__ == "__main__":
-    pass
+    # Create a new puzzle instance
+    puzzle1 = EightPuzzle()
+    puzzle2 = EightPuzzle()
+
+    # Scramble the puzzle 
+    scramble_moves = 10
+    print(f"Scrambling the puzzle with {scramble_moves} random moves...")
+    puzzle1.scrambleState(scramble_moves)
+    puzzle2.scrambleState(scramble_moves)
+
+    # Print the scrambled state
+    print("Scrambled Puzzle State:")
+    puzzle1.printState()
+    print("------------")
+
+    puzzle2.printState()
+    print("------------")
+
+    # Solve the puzzle using DFS
+    print("\nSolving the puzzle using DFS with max nodes = 1000...")
+    puzzle1.solveDFS(max_nodes=1000)
+    print("------------")
+
+    # Solve the puzzle using BFS
+    print("\nSolving the puzzle using BFS with max nodes = 1000...")
+    puzzle2.solveBFS(max_nodes=1000)
+    
     
 
     
