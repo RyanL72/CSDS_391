@@ -162,23 +162,26 @@ class EightPuzzle:
         stack = [(self.copy(), [])]  
         nodes_explored = 0
         visited = set()
-        
 
         while stack:
             current_state, path = stack.pop()
             nodes_explored += 1
 
-            # use Set to keep track of where I already visited
+            # Use Set to keep track of where I already visited
             state_key = tuple(tuple(row) for row in current_state.__puzzleConfiguration)
-            
             str_cur_state = ' '.join(str(piece) for line in current_state.__puzzleConfiguration for piece in line)
             visited.add(str_cur_state)
+
             if current_state.isSolved():
-                print(f"Solved with path: {path}")
+                print(f"Nodes created during search: {nodes_explored}")
+                print(f"Solution length: {len(path)}")
+                print("Move sequence:")
+                for move in path:
+                    print(f"move {move}")
                 return path
 
             if nodes_explored >= max_nodes:
-                print("Node limit reached, solution not found")
+                print(f"Node limit {max_nodes} reached, solution not found")
                 return None
 
             valid_moves = current_state.getValidMoves()
@@ -191,26 +194,31 @@ class EightPuzzle:
 
         print("No solution found")
         return None
+
     
     def solveBFS(self, max_nodes=1000):
         queue = deque([(self.copy(), [])])  # Queue with the initial state and empty path
         nodes_explored = 0
-        visited = set()  
+        visited = set()
 
         # Add the initial state's string representation to the visited set
         initial_state_str = ' '.join(str(piece) for line in self.__puzzleConfiguration for piece in line)
         visited.add(initial_state_str)
-        
+
         while queue:
             current_state, path = queue.popleft()  # Get the current state and path from the queue
             nodes_explored += 1
 
             if current_state.isSolved():
-                print(f"Solved with path: {path}")
+                print(f"Nodes created during search: {nodes_explored}")
+                print(f"Solution length: {len(path)}")
+                print("Move sequence:")
+                for move in path:
+                    print(f"move {move}")
                 return path
 
             if nodes_explored >= max_nodes:
-                print("Node limit reached, solution not found")
+                print(f"Node limit {max_nodes} reached, solution not found")
                 return None
 
             valid_moves = current_state.getValidMoves()
@@ -220,20 +228,21 @@ class EightPuzzle:
 
                 # Convert the new state to a string for the visited set
                 new_state_str = ' '.join(str(piece) for line in new_state.__puzzleConfiguration for piece in line)
-                
+
                 # Check if this new state has been visited before
                 if new_state_str not in visited:
                     visited.add(new_state_str)  
-                    queue.append((new_state, path + [move]))  
+                    queue.append((new_state, path + [move]))
 
         print("No solution found")
         return None
+
     
 
 
 
     def cmd(self, command):
-        
+
         command = command.strip()
         if not command or command.startswith('#') or command.startswith('//'):
             return  
@@ -277,9 +286,19 @@ class EightPuzzle:
         with open(filename, 'r') as file:
             for line in file:
                 command = line.strip()
+                
+                # Print the command to the terminal
                 if command.startswith('#') or command.startswith('//'):
-                    continue
-                self.cmd(command)
+                    # If it's a comment, print it as a comment
+                    print(f"Comment: {command}")
+                elif command:  # Non-empty line (not a comment)
+                    print(f"Running command: {command}")
+                    self.cmd(command)  # Execute the command
+                else:
+                    # Skip empty lines but optionally you can print this
+                    print("Skipping empty line")
+                    command = line.strip()
+                
         
     # Helper Functions
 
