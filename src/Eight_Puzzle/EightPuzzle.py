@@ -237,9 +237,20 @@ class EightPuzzle:
         print("No solution found")
         return None
 
+    # Assignment 3
     
+    def heuristicNumMismatch(self):
+        solvedArray = [[0,1,2], [3,4,5],[6,7,8]]
+        wrongCount = 0
 
+        for i in range(len(self.__puzzleConfiguration)):
+            for j in range(len(self.__puzzleConfiguration[i])):
+                if(solvedArray[j][i] != self.__puzzleConfiguration[j][i]):
+                    if(self.__puzzleConfiguration == 0):
+                        continue
+                    wrongCount+=1
 
+        return wrongCount 
 
     def cmd(self, command):
 
@@ -279,6 +290,9 @@ class EightPuzzle:
         elif parts[0] == "solveBFS":
             max_nodes = int(parts[1]) if len(parts) > 1 else 1000  # default max_nodes = 1000
             self.solveBFS(max_nodes=max_nodes)
+        elif parts[0] == "heuristics":
+            if parts[1] == "h1":
+                print(self.heuristicNumMismatch())
         else:
             print(f"Error: invalid command: {command}")
             

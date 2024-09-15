@@ -1,0 +1,4 @@
+printState
+scrambleState 10
+printState
+heuristics h1
