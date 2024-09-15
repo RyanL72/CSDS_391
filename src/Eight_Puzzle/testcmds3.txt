@@ -2,3 +2,4 @@ printState
 scrambleState 10
 printState
 heuristics h1
+heuristics h2

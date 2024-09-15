@@ -245,12 +245,50 @@ class EightPuzzle:
 
         for i in range(len(self.__puzzleConfiguration)):
             for j in range(len(self.__puzzleConfiguration[i])):
-                if(solvedArray[j][i] != self.__puzzleConfiguration[j][i]):
-                    if(self.__puzzleConfiguration == 0):
+                if self.__puzzleConfiguration[j][i] == 0:
                         continue
+                if solvedArray[j][i] != self.__puzzleConfiguration[j][i]:
                     wrongCount+=1
-
         return wrongCount 
+    
+    def heuristicManhattan(self):
+        # Figure out where it needs to go
+        # calculate the distance
+        manhattanTotal = 0
+        for i in range(len(self.__puzzleConfiguration)):
+            for j in range(len(self.__puzzleConfiguration[i])):
+                value = self.__puzzleConfiguration[j][i]
+                if value == 0:
+                    continue
+                goalPosition = self.goalPosition(value)
+                xDeviation = abs(i - goalPosition[1])
+                yDeviation = abs(j - goalPosition[0])
+                manhattanTotal += xDeviation + yDeviation
+        return manhattanTotal
+
+    def goalPosition(self, number):
+        if number == 0:
+            return (0,0)
+        elif number == 1:
+            return (0,1)
+        elif number == 2:
+            return (0,2)
+        elif number == 3:
+            return (1,0)
+        elif number == 4:
+            return (1,1)
+        elif number == 5:
+            return (1,2)
+        elif number == 6:
+            return (2,0)
+        elif number == 7:
+            return (2,1)
+        elif number == 8:
+            return (2,2)
+        else:
+            raise ValueError(f"{number} is not a number 0 - 8")
+        
+
 
     def cmd(self, command):
 
@@ -285,14 +323,17 @@ class EightPuzzle:
             except:
                 print("Error: invalid scramble number")
         elif parts[0] == "solveDFS":
-            max_nodes = int(parts[1]) if len(parts) > 1 else 1000  # default max_nodes = 1000
+            max_nodes = int(parts[1]) if len(parts) > 1 else 1000  
             self.solveDFS(max_nodes=max_nodes)
         elif parts[0] == "solveBFS":
-            max_nodes = int(parts[1]) if len(parts) > 1 else 1000  # default max_nodes = 1000
+            max_nodes = int(parts[1]) if len(parts) > 1 else 1000  
             self.solveBFS(max_nodes=max_nodes)
         elif parts[0] == "heuristics":
             if parts[1] == "h1":
                 print(self.heuristicNumMismatch())
+            elif parts[1] == "h2":
+                printvalue = self.heuristicManhattan()
+                print(printvalue)
         else:
             print(f"Error: invalid command: {command}")
             
