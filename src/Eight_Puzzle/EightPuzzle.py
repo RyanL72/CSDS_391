@@ -5,20 +5,19 @@ class EightPuzzle:
     
     def __init__(self, puzzleConfiguration=[[0,1,2],[3,4,5],[6,7,8]]):
         self.__puzzleConfiguration = puzzleConfiguration
+        self.__stateHistory = set()
+        self.storeState()
         '''
         Assignment 1
 
         puzzleConfiguration[y][x]
 
-        .------------------------> (X)
-        |
-        |
-        |
-        |
+        .---------> (X)
         |
         |
         |
         v
+
         (Y)
 
         '''
@@ -26,22 +25,21 @@ class EightPuzzle:
         self.__y = None
         self.updateZeroPosition()
 
-
-
     def setState(self, newPuzzleConfiguration):
         self.checkConfiguration(newPuzzleConfiguration)
         self.__puzzleConfiguration = newPuzzleConfiguration
         self.updateZeroPosition()
-        #print(f"Set Zero to {self.__x} {self.__y}")
+        self.storeState()
+        #print(f"Set Zero to {self.__x} {self.__y}")    
         
-        
-
     def printState(self):
         for row in self.__puzzleConfiguration:
             formattedRow = [" " if element == 0 else str(element) for element in row]
             print(" ".join(formattedRow))
     
-   
+    def printHistory(self):
+        print(self.__stateHistory)
+    
     def move(self, direction):
         directionLowerCase=direction.lower()
         #print(directionLowerCase)
@@ -168,7 +166,6 @@ class EightPuzzle:
             nodes_explored += 1
 
             # Use Set to keep track of where I already visited
-            state_key = tuple(tuple(row) for row in current_state.__puzzleConfiguration)
             str_cur_state = ' '.join(str(piece) for line in current_state.__puzzleConfiguration for piece in line)
             visited.add(str_cur_state)
 
@@ -288,6 +285,22 @@ class EightPuzzle:
         else:
             raise ValueError(f"{number} is not a number 0 - 8")
         
+    def getPuzzleConfiguration(self):
+        return ([row[:] for row in self.__puzzleConfiguration])
+    
+    # 2D Arrays are not hashable so I need to store it as a string
+    def storeState(self):
+        str_cur_state = self.hashStringPuzzleConfiguration(self.__puzzleConfiguration)
+        self.__stateHistory.add(str_cur_state)
+    
+    def isUnexploredState(self, possibleUnexploredState) -> bool:
+        if self.hashStringPuzzleConfiguration(possibleUnexploredState) in self.__stateHistory:
+            return False
+        return True
+    
+    def hashStringPuzzleConfiguration(self, configuration):
+        str_cur_state = ' '.join(str(piece) for line in configuration for piece in line)
+        return str_cur_state
 
 
     def cmd(self, command):
@@ -352,11 +365,9 @@ class EightPuzzle:
                 else:
                     # Skip empty lines but optionally you can print this
                     print("Skipping empty line")
-                    command = line.strip()
-                
+                    command = line.strip()     
         
     # Helper Functions
-
     def checkConfiguration(self, configuration):
         requiredValues = set(range(9))
         flattenedConfiguration = [element for row in configuration for element in row]
@@ -392,34 +403,6 @@ class EightPuzzle:
     def copy(self):
         return EightPuzzle([row[:] for row in self.__puzzleConfiguration])
 
-
-if __name__ == "__main__":
-    # Create a new puzzle instance
-    puzzle1 = EightPuzzle()
-    puzzle2 = EightPuzzle()
-
-    # Scramble the puzzle 
-    scramble_moves = 20
-    print(f"Scrambling the puzzle with {scramble_moves} random moves...")
-    puzzle1.scrambleState(scramble_moves)
-    puzzle2.scrambleState(scramble_moves)
-
-    # Print the scrambled state
-    print("Scrambled Puzzle State:")
-    puzzle1.printState()
-    print("------------")
-
-    puzzle2.printState()
-    print("------------")
-
-    # Solve the puzzle using DFS
-    print("\nSolving the puzzle using DFS with max nodes = 1000...")
-    puzzle1.solveDFS(max_nodes=1000)
-    print("------------")
-
-    # Solve the puzzle using BFS
-    print("\nSolving the puzzle using BFS with max nodes = 1000...")
-    puzzle2.solveBFS(max_nodes=1000)
     
     
 
