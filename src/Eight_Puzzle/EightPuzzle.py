@@ -1,5 +1,6 @@
 import random
 from collections import deque
+import heapq
 
 class EightPuzzle:
     
@@ -30,7 +31,6 @@ class EightPuzzle:
         self.__puzzleConfiguration = newPuzzleConfiguration
         self.updateZeroPosition()
         self.storeState()
-        #print(f"Set Zero to {self.__x} {self.__y}")    
         
     def printState(self):
         for row in self.__puzzleConfiguration:
@@ -42,73 +42,46 @@ class EightPuzzle:
     
     def move(self, direction):
         directionLowerCase=direction.lower()
-        #print(directionLowerCase)
         validMoves = self.getValidMoves()
-        #print(f"The valid moves are: {validMoves}")
-        #print(f"Before this move, the current zero is at {self.__x} {self.__y}")
         if directionLowerCase in validMoves:
                 
                 currentX = self.__x
                 currentY = self.__y
 
                 if directionLowerCase == "right":
-                    #print("Moving right")
                     swapPosition = currentX + 1
-                    #print(f" -the position we are swapping is swapPosition {swapPosition} right")
                     newState = [row[:] for row in self.__puzzleConfiguration] 
-                    #print(f" -copy of old array: {newState}")
                     swapPtr = newState[currentY][swapPosition]
-                    #print(f" -The value we need to swap into blank: {swapPtr}")
                     newState[currentY][swapPosition] = newState[currentY][currentX]
-                    #print(f" -The new configuration step 1: {newState}")
                     newState[currentY][currentX] = swapPtr
-                    #print(f" -The new configuration step 2: {newState}")
                     self.setState(newState)
                     return
 
                 elif directionLowerCase == "down":
-                    #print("Moving down")
                     swapPosition = currentY + 1
-                    #print(f" -the position we are swapping is swapPosition {swapPosition} down")
                     newState = [row[:] for row in self.__puzzleConfiguration] 
-                    #print(f" -copy of old array: {newState}")
                     swapPtr = newState[swapPosition][currentX]
-                    #print(f" -The value we need to swap into blank: {swapPtr}")
                     newState[swapPosition][currentX] = newState[currentY][currentX]
-                    #print(f" -The new configuration step 1: {newState}")
                     newState[currentY][currentX] = swapPtr
-                    #print(f" -The new configuration step 2: {newState}")
                     self.setState(newState)
                     return
 
                 elif directionLowerCase == "left":
-                    #print("Moving left")
                     swapPosition = currentX - 1
-                    #print(f" -the position we are swapping is swapPosition {swapPosition} left")
                     newState = [row[:] for row in self.__puzzleConfiguration]  
-                    #print(f" -copy of old array: {newState}")
                     swapPtr = newState[currentY][swapPosition]
-                    #print(f" -The value we need to swap into blank: {swapPtr}")
                     newState[currentY][swapPosition] = newState[currentY][currentX]
-                    #print(f" -The new configuration step 1: {newState}")
                     newState[currentY][currentX] = swapPtr
-                    #print(f" -The new configuration step 2: {newState}")
                     self.setState(newState)
                     return
 
                 elif directionLowerCase == "up":
-                    #print("Moving up")
-                    #print(f" -the currentY: {currentY}")
                     swapPosition = currentY - 1
-                    #print(f" -the position we are swapping is swapPosition {swapPosition} up")
                     newState = [row[:] for row in self.__puzzleConfiguration]  
-                    #print(f" -copy of old array: {newState}")
                     swapPtr = newState[swapPosition][currentX]
-                    #print(f" -The value we need to swap into blank: {swapPtr}")
                     newState[swapPosition][currentX] = newState[currentY][currentX]
-                    #print(f" -The new configuration step 1: {newState}")
                     newState[currentY][currentX] = swapPtr
-                    #print(f" -The new configuration step 2: {newState}")
+
                     self.setState(newState)
                     return
 
@@ -117,7 +90,6 @@ class EightPuzzle:
 
     def getValidMoves(self):
         position = self.getZeroPosition()
-        #print(f"Our Zero Position is {position}")
         if position == (0, 0):
             return ["right", "down"]
         elif position == (1, 0):
@@ -141,16 +113,12 @@ class EightPuzzle:
         self.setState([[0,1,2],[3,4,5],[6,7,8]])
         count=0
         while count < n:
-            #print(f"count: {count}" )
-            #self.printState()
-            #print("--------")
             validMoves = self.getValidMoves()
             randomValidMoveNumber = random.randint(0,len(validMoves)-1)
             randomValidMove = validMoves[randomValidMoveNumber]
             self.move(randomValidMove)
             count = count + 1
-        #print(f"count: {count}")
-        #self.printState()
+
 
     '''
     Assignment 2 
@@ -194,7 +162,7 @@ class EightPuzzle:
 
     
     def solveBFS(self, max_nodes=1000):
-        queue = deque([(self.copy(), [])])  # Queue with the initial state and empty path
+        queue = deque([(self.copy(), [])])  
         nodes_explored = 0
         visited = set()
 
@@ -220,8 +188,8 @@ class EightPuzzle:
 
             valid_moves = current_state.getValidMoves()
             for move in valid_moves:
-                new_state = current_state.copy()  # Create a copy of the current state
-                new_state.move(move)  # Apply the move to the new state
+                new_state = current_state.copy()
+                new_state.move(move)  
 
                 # Convert the new state to a string for the visited set
                 new_state_str = ' '.join(str(piece) for line in new_state.__puzzleConfiguration for piece in line)
@@ -372,7 +340,6 @@ class EightPuzzle:
         requiredValues = set(range(9))
         flattenedConfiguration = [element for row in configuration for element in row]
         flattenedConfigurationSet = set(flattenedConfiguration)
-        #print(f"configuration:{flattenedConfigurationSet}   requirement:{requiredValues}")
         if(set(flattenedConfigurationSet) == requiredValues):
             pass
         else:
