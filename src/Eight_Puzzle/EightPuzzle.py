@@ -6,20 +6,19 @@ class EightPuzzle:
     
     def __init__(self, puzzleConfiguration=[[0,1,2],[3,4,5],[6,7,8]]):
         self.__puzzleConfiguration = puzzleConfiguration
+        self.__stateHistory = set()
+        self.storeState()
         '''
         Assignment 1
 
         puzzleConfiguration[y][x]
 
-        .------------------------> (X)
-        |
-        |
-        |
-        |
+        .---------> (X)
         |
         |
         |
         v
+
         (Y)
 
         '''
@@ -30,20 +29,16 @@ class EightPuzzle:
         self.__stateTracking = False
         self.__stateHistory = set()
 
-
-
     def setState(self, newPuzzleConfiguration):
         self.checkConfiguration(newPuzzleConfiguration)
         self.__puzzleConfiguration = newPuzzleConfiguration
         self.updateZeroPosition()
         
-        
-
     def printState(self):
         for row in self.__puzzleConfiguration:
             formattedRow = [" " if element == 0 else str(element) for element in row]
             print(" ".join(formattedRow))
-    
+
     # Store the current state in state history before moving
     def move(self, direction):
         if self.__stateTracking == True:
@@ -168,7 +163,7 @@ class EightPuzzle:
 
     
     def solveBFS(self, max_nodes=1000):
-        queue = deque([(self.copy(), [])])  # Queue with the initial state and empty path
+        queue = deque([(self.copy(), [])])  
         nodes_explored = 0
         visited = set()
 
@@ -194,8 +189,8 @@ class EightPuzzle:
 
             valid_moves = current_state.getValidMoves()
             for move in valid_moves:
-                new_state = current_state.copy()  # Create a copy of the current state
-                new_state.move(move)  # Apply the move to the new state
+                new_state = current_state.copy()
+                new_state.move(move)  
 
                 # Convert the new state to a string for the visited set
                 new_state_str = ' '.join(str(piece) for line in new_state.__puzzleConfiguration for piece in line)
@@ -281,7 +276,7 @@ class EightPuzzle:
             return False
         else:
             return True    
-        
+          
     def printStateHistory(self):
         print(self.__stateHistory)
 
@@ -423,14 +418,13 @@ class EightPuzzle:
                     # Skip empty lines 
                     command = line.strip()
                 
+
         
     # Helper Functions
-
     def checkConfiguration(self, configuration):
         requiredValues = set(range(9))
         flattenedConfiguration = [element for row in configuration for element in row]
         flattenedConfigurationSet = set(flattenedConfiguration)
-        #print(f"configuration:{flattenedConfigurationSet}   requirement:{requiredValues}")
         if(set(flattenedConfigurationSet) == requiredValues):
             pass
         else:
