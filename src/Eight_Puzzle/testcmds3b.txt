@@ -1,0 +1,4 @@
+scrambleState 20
+printState
+solve A* h1
+solve A* h2

@@ -1,5 +1,6 @@
 import random
 from collections import deque
+import heapq
 
 class EightPuzzle:
     
@@ -284,6 +285,73 @@ class EightPuzzle:
     def printStateHistory(self):
         print(self.__stateHistory)
 
+    def solveAStar(self, heuristic="manhattan", max_nodes=1000):
+        
+        start_state = self.copy()
+        g_score = 0  # Initial cost (number of moves so far)
+
+        # Choose the heuristic function based on the parameter
+        if heuristic == "h2":
+            h_score = start_state.heuristicManhattan()
+        elif heuristic == "h1":
+            h_score = start_state.heuristicNumMismatch()
+        else:
+            raise ValueError(f"Invalid heuristic: {heuristic}. Choose 'h1' or 'h2'.")
+
+        f_score = g_score + h_score
+        
+        # Priority queue for A* (min-heap), stores (f, g, path, state)
+        pq = [(f_score, g_score, [], start_state)]
+        
+        # Visited set to track explored states
+        visited = set()
+        
+        # Convert the initial state into a hashable string representation
+        initial_state_str = start_state.hashConfiguration(start_state.__puzzleConfiguration)
+        visited.add(initial_state_str)
+        
+        nodes_explored = 0
+        
+        while pq and nodes_explored < max_nodes:
+            # Pop the state with the lowest f_score (f = g + h)
+            f, g, path, current_state = heapq.heappop(pq)
+            nodes_explored += 1
+            
+            # Check if the current state is the goal (solved state)
+            if current_state.isSolved():
+                print(f"Solution found after exploring {nodes_explored} nodes")
+                print(f"Solution path length: {len(path)}")
+                print("Path:", path)
+                return path
+            
+            # Explore all the valid moves from the current state
+            for move in current_state.getValidMoves():
+                new_state = current_state.copy()
+                new_state.move(move)
+                
+                new_state_str = new_state.hashConfiguration(new_state.__puzzleConfiguration)
+                
+                # If the new state has not been visited, explore it
+                if new_state_str not in visited:
+                    new_g = g + 1  # find the g_score (cost) for the move
+
+                    # Compute h_score based on the selected heuristic
+                    if heuristic == "h2":
+                        new_h = new_state.heuristicManhattan()
+                    elif heuristic == "h1":
+                        new_h = new_state.heuristicNumMismatch()
+
+                    new_f = new_g + new_h  
+                    
+                    # Add the new state to the priority queue (only compare f and g)
+                    heapq.heappush(pq, (new_f, new_g, path + [move], new_state))
+                    
+                    # Mark the new state as visited
+                    visited.add(new_state_str)
+        
+        print(f"No solution found after exploring {nodes_explored} nodes.")
+        return None
+    
     def cmd(self, command):
 
         command = command.strip()
@@ -328,9 +396,17 @@ class EightPuzzle:
             elif parts[1] == "h2":
                 printvalue = self.heuristicManhattan()
                 print(printvalue)
+        elif parts[0] == "solve":
+            if parts[1] == "A*":
+                if parts[2] == "h1":
+                    max_nodes = int(parts[3]) if len(parts) > 3 else 1000
+                    self.solveAStar("h1", max_nodes)
+                elif parts[2] == "h2":
+                    max_nodes = int(parts[3]) if len(parts) > 3 else 1000
+                    self.solveAStar("h2", max_nodes)
         else:
             print(f"Error: invalid command: {command}")
-            
+
     def cmdfile(self, filename):
         with open(filename, 'r') as file:
             for line in file:
@@ -344,8 +420,7 @@ class EightPuzzle:
                     print(f"Running command: {command}")
                     self.cmd(command)  # Execute the command
                 else:
-                    # Skip empty lines but optionally you can print this
-                    print("Skipping empty line")
+                    # Skip empty lines 
                     command = line.strip()
                 
         
@@ -385,15 +460,4 @@ class EightPuzzle:
     
     def copy(self):
         return EightPuzzle([row[:] for row in self.__puzzleConfiguration])
-
-
-
-    
-
-    
-    
-
-
-
-
 
