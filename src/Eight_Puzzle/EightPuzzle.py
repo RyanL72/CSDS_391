@@ -25,6 +25,9 @@ class EightPuzzle:
         self.__x = None
         self.__y = None
         self.updateZeroPosition()
+       
+        self.__stateTracking = False
+        self.__stateHistory = set()
 
 
 
@@ -40,8 +43,11 @@ class EightPuzzle:
             formattedRow = [" " if element == 0 else str(element) for element in row]
             print(" ".join(formattedRow))
     
-   
+    # Store the current state in state history before moving
     def move(self, direction):
+        if self.__stateTracking == True:
+            self.updateHistory()
+
         directionLowerCase=direction.lower()
         validMoves = self.getValidMoves()
         if directionLowerCase in validMoves:
@@ -133,7 +139,6 @@ class EightPuzzle:
             nodes_explored += 1
 
             # Use Set to keep track of where I already visited
-            state_key = tuple(tuple(row) for row in current_state.__puzzleConfiguration)
             str_cur_state = ' '.join(str(piece) for line in current_state.__puzzleConfiguration for piece in line)
             visited.add(str_cur_state)
 
@@ -252,8 +257,32 @@ class EightPuzzle:
             return (2,2)
         else:
             raise ValueError(f"{number} is not a number 0 - 8")
-        
 
+    def stopStateTracking(self):
+        self.__stateTracking = False
+
+    def startStateTracking(self):
+        self.__stateTracking = True
+        
+    def updateHistory(self):
+        if(self.__stateTracking == False):
+            raise ValueError("State Tracking is off")
+        else:
+            self.__stateHistory.add(self.hashConfiguration(self.__puzzleConfiguration))
+            return
+        
+    def hashConfiguration(self, configuration):
+        str_configuration = ' '.join(str(piece) for line in configuration for piece in line)
+        return str_configuration
+
+    def isUnexploredState(self) -> bool:
+        if self.hashConfiguration(self.__puzzleConfiguration) in self.__stateHistory:
+            return False
+        else:
+            return True    
+        
+    def printStateHistory(self):
+        print(self.__stateHistory)
 
     def cmd(self, command):
 
@@ -358,34 +387,7 @@ class EightPuzzle:
         return EightPuzzle([row[:] for row in self.__puzzleConfiguration])
 
 
-if __name__ == "__main__":
-    # Create a new puzzle instance
-    puzzle1 = EightPuzzle()
-    puzzle2 = EightPuzzle()
 
-    # Scramble the puzzle 
-    scramble_moves = 20
-    print(f"Scrambling the puzzle with {scramble_moves} random moves...")
-    puzzle1.scrambleState(scramble_moves)
-    puzzle2.scrambleState(scramble_moves)
-
-    # Print the scrambled state
-    print("Scrambled Puzzle State:")
-    puzzle1.printState()
-    print("------------")
-
-    puzzle2.printState()
-    print("------------")
-
-    # Solve the puzzle using DFS
-    print("\nSolving the puzzle using DFS with max nodes = 1000...")
-    puzzle1.solveDFS(max_nodes=1000)
-    print("------------")
-
-    # Solve the puzzle using BFS
-    print("\nSolving the puzzle using BFS with max nodes = 1000...")
-    puzzle2.solveBFS(max_nodes=1000)
-    
     
 
     
