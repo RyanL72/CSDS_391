@@ -1,0 +1,54 @@
+Running command: printState
+  1 2
+3 4 5
+6 7 8
+Running command: scrambleState 10
+Running command: printState
+1 4 2
+3 7 5
+  6 8
+Running command: heuristics h1
+4
+Running command: heuristics h2
+4
+
+
+
+  1 2
+3 4 5
+6 7 8
+1   2
+3 4 5
+6 7 8
+True
+1   2
+3 4 5
+6 7 8
+False
+
+
+3 2 5
+4   1
+6 7 8
+Solution found after exploring 11 nodes
+Solution path length: 6
+Path: ['right', 'up', 'left', 'down', 'left', 'up']
+3 2 5
+4   1
+6 7 8
+
+
+Running command: scrambleState 20
+Running command: printState
+3 1 2
+6 4 8
+5 7  
+Running command: solve A* h1
+Solution found after exploring 46 nodes
+Solution path length: 10
+Path: ['left', 'left', 'up', 'right', 'down', 'right', 'up', 'left', 'left', 'up']
+Running command: solve A* h2
+Solution found after exploring 26 nodes
+Solution path length: 10
+Path: ['left', 'left', 'up', 'right', 'down', 'right', 'up', 'left', 'left', 'up']
+
