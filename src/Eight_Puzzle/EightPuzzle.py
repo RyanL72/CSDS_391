@@ -1,6 +1,7 @@
 import random
 from collections import deque
 import heapq
+import math
 
 class EightPuzzle:
     
@@ -373,7 +374,7 @@ class EightPuzzle:
                 b_star = (nodes_generated / (depth - 1)) ** (1 / (depth - 1))
         
         return b_star
-    
+       
     def cmd(self, command):
 
         command = command.strip()
@@ -482,4 +483,43 @@ class EightPuzzle:
     
     def copy(self):
         return EightPuzzle([row[:] for row in self.__puzzleConfiguration])
+    
+class EightPuzzleTest:
+    def testBranchingFactor(self, known_b_star, depth):
+        """
+        Test the `findEffectiveBranchingFactor` function with a tree that has
+        a known branching factor and depth.
+        """
+        # Calculate the total number of nodes analytically using geometric series
+        nodes_generated = self.calculateTotalNodes(known_b_star, depth)
 
+        # Use the findEffectiveBranchingFactor function to estimate b*
+        estimated_b_star = EightPuzzle().findEffectiveBranchingFactor(nodes_generated, depth)
+        
+        print(f"Known b*: {known_b_star}, Estimated b*: {estimated_b_star}, Nodes: {nodes_generated}")
+        
+    def calculateTotalNodes(self, b_star, depth):
+        """
+        Calculate the total number of nodes in a tree with branching factor `b_star` and depth `depth`
+        using the geometric series formula.
+        """
+        if b_star == 1:
+            return depth + 1  # Special case when b* = 1, it is a straight line tree
+        
+        return int((b_star**(depth + 1) - 1) / (b_star - 1))
+
+def main():
+    puzzle_test = EightPuzzleTest()
+
+    # Test the algorithm with known values for branching factor and depth
+    print("Running test cases for effective branching factor estimation...\n")
+    
+    puzzle_test.testBranchingFactor(2, 5)  # Known branching factor b* = 2, depth = 5
+    puzzle_test.testBranchingFactor(3, 4)  # Known branching factor b* = 3, depth = 4
+    puzzle_test.testBranchingFactor(4, 6)  # Known branching factor b* = 4, depth = 6
+    puzzle_test.testBranchingFactor(2, 3)  # Known branching factor b* = 2, depth = 3
+
+    print("\nTests completed.")
+
+if __name__ == "__main__":
+    main()
