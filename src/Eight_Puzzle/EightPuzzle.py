@@ -7,8 +7,6 @@ class EightPuzzle:
     def __init__(self, puzzleConfiguration=[[0,1,2],[3,4,5],[6,7,8]]):
         self.__puzzleConfiguration = puzzleConfiguration
         '''
-        Assignment 1
-
         puzzleConfiguration[y][x]
 
         .------------------------> (X)
@@ -149,6 +147,7 @@ class EightPuzzle:
                 print("Move sequence:")
                 for move in path:
                     print(f"move {move}")
+                print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
 
             if nodes_explored >= max_nodes:
@@ -186,6 +185,7 @@ class EightPuzzle:
                 print("Move sequence:")
                 for move in path:
                     print(f"move {move}")
+                print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
 
             if nodes_explored >= max_nodes:
@@ -322,6 +322,7 @@ class EightPuzzle:
                 print(f"Solution found after exploring {nodes_explored} nodes")
                 print(f"Solution path length: {len(path)}")
                 print("Path:", path)
+                print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
             
             # Explore all the valid moves from the current state
@@ -351,6 +352,27 @@ class EightPuzzle:
         
         print(f"No solution found after exploring {nodes_explored} nodes.")
         return None
+    
+    def findEffectiveBranchingFactor(self, nodes_generated, depth, tolerance=1e-6):
+
+        if depth == 0:
+            return 0  #Base case
+
+        # Start with an initial guess for b, we assume all nodes are distributed evenly
+        b_star = (nodes_generated / depth) ** (1 / depth)
+
+        for _ in range(depth - 1):
+            # Calculate the number of nodes at the current level 
+            current_level_nodes = b_star
+
+            # Subtract the number of nodes from the total nodes remaining
+            nodes_generated -= current_level_nodes
+
+            # Recalculate b* using the remaining nodes and depth
+            if nodes_generated > 0:
+                b_star = (nodes_generated / (depth - 1)) ** (1 / (depth - 1))
+        
+        return b_star
     
     def cmd(self, command):
 
