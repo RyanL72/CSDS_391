@@ -143,11 +143,12 @@ class EightPuzzle:
             visited.add(str_cur_state)
 
             if current_state.isSolved():
+                print("DFS results:")
                 print(f"Nodes created during search: {nodes_explored}")
                 print(f"Solution length: {len(path)}")
-                print("Move sequence:")
-                for move in path:
-                    print(f"move {move}")
+                # print("Move sequence:")
+                # for move in path:
+                #     print(f"move {move}")
                 print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
 
@@ -181,11 +182,12 @@ class EightPuzzle:
             nodes_explored += 1
 
             if current_state.isSolved():
+                print("BFS results:")
                 print(f"Nodes created during search: {nodes_explored}")
                 print(f"Solution length: {len(path)}")
-                print("Move sequence:")
-                for move in path:
-                    print(f"move {move}")
+                # print("Move sequence:")
+                # for move in path:
+                #     print(f"move {move}")
                 print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
 
@@ -320,9 +322,10 @@ class EightPuzzle:
             
             # Check if the current state is the goal (solved state)
             if current_state.isSolved():
+                print(f"Astar {heuristic} results:")
                 print(f"Solution found after exploring {nodes_explored} nodes")
                 print(f"Solution path length: {len(path)}")
-                print("Path:", path)
+                # print("Path:", path)
                 print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
             
