@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eight_Puzzle &mdash; CSDS_391 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="CSDS_391 documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            CSDS_391
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Eight_Puzzle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle"><code class="docutils literal notranslate"><span class="pre">EightPuzzle</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.checkConfiguration"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.checkConfiguration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.cmd"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.cmdfile"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.cmdfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.copy"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.getValidMoves"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.getValidMoves()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.getZeroPosition"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.getZeroPosition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.goalPosition"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.goalPosition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.hashConfiguration"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.hashConfiguration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.heuristicManhattan"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.heuristicManhattan()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.heuristicNumMismatch"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.heuristicNumMismatch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.isSolved"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.isSolved()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.isUnexploredState"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.isUnexploredState()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.move"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.printPuzzleConfiguration"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.printPuzzleConfiguration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.printState"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.printState()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.scrambleState"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.scrambleState()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.setState"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.setState()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.solveAStar"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.solveAStar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.solveBFS"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.solveBFS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.solveDFS"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.solveDFS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.startStateTracking"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.startStateTracking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.stopStateTracking"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.stopStateTracking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.updateHistory"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.updateHistory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.updateZeroPosition"><code class="docutils literal notranslate"><span class="pre">EightPuzzle.updateZeroPosition()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CSDS_391</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Eight_Puzzle</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/EightPuzzle.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-Eight_Puzzle.EightPuzzle">
+<span id="eight-puzzle"></span><h1>Eight_Puzzle<a class="headerlink" href="#module-Eight_Puzzle.EightPuzzle" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Eight_Puzzle.EightPuzzle.</span></span><span class="sig-name descname"><span class="pre">EightPuzzle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">puzzleConfiguration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[[0,</span> <span class="pre">1,</span> <span class="pre">2],</span> <span class="pre">[3,</span> <span class="pre">4,</span> <span class="pre">5],</span> <span class="pre">[6,</span> <span class="pre">7,</span> <span class="pre">8]]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Implementation of an Eight Puzzle with built-in self solving solutions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.checkConfiguration">
+<span class="sig-name descname"><span class="pre">checkConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.checkConfiguration" title="Link to this definition"></a></dt>
+<dd><p>Check if the puzzle configuration contains all required numbers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.cmd">
+<span class="sig-name descname"><span class="pre">cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.cmd" title="Link to this definition"></a></dt>
+<dd><p>Execute a command string for puzzle operations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.cmdfile">
+<span class="sig-name descname"><span class="pre">cmdfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.cmdfile" title="Link to this definition"></a></dt>
+<dd><p>Execute commands from a file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.copy" title="Link to this definition"></a></dt>
+<dd><p>Create and return a copy of the current puzzle configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.getValidMoves">
+<span class="sig-name descname"><span class="pre">getValidMoves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.getValidMoves" title="Link to this definition"></a></dt>
+<dd><p>Return the list of valid moves based on the empty tile’s position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.getZeroPosition">
+<span class="sig-name descname"><span class="pre">getZeroPosition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.getZeroPosition" title="Link to this definition"></a></dt>
+<dd><p>Return the position of the empty tile (0).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.goalPosition">
+<span class="sig-name descname"><span class="pre">goalPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.goalPosition" title="Link to this definition"></a></dt>
+<dd><p>Return the goal position of a given number in the puzzle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.hashConfiguration">
+<span class="sig-name descname"><span class="pre">hashConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.hashConfiguration" title="Link to this definition"></a></dt>
+<dd><p>Hash the puzzle configuration for state tracking.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.heuristicManhattan">
+<span class="sig-name descname"><span class="pre">heuristicManhattan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.heuristicManhattan" title="Link to this definition"></a></dt>
+<dd><p>Calculate the heuristic based on the Manhattan distance of tiles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.heuristicNumMismatch">
+<span class="sig-name descname"><span class="pre">heuristicNumMismatch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.heuristicNumMismatch" title="Link to this definition"></a></dt>
+<dd><p>Calculate the heuristic based on the number of misplaced tiles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.isSolved">
+<span class="sig-name descname"><span class="pre">isSolved</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.isSolved" title="Link to this definition"></a></dt>
+<dd><p>Check if the puzzle is in the solved state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.isUnexploredState">
+<span class="sig-name descname"><span class="pre">isUnexploredState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.isUnexploredState" title="Link to this definition"></a></dt>
+<dd><p>Check if the current state has been visited.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.move" title="Link to this definition"></a></dt>
+<dd><p>Move the empty tile (0) in the given direction if valid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.printPuzzleConfiguration">
+<span class="sig-name descname"><span class="pre">printPuzzleConfiguration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.printPuzzleConfiguration" title="Link to this definition"></a></dt>
+<dd><p>Print the puzzle configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.printState">
+<span class="sig-name descname"><span class="pre">printState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.printState" title="Link to this definition"></a></dt>
+<dd><p>Print the current puzzle state in a human-readable format.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.scrambleState">
+<span class="sig-name descname"><span class="pre">scrambleState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.scrambleState" title="Link to this definition"></a></dt>
+<dd><p>Scramble the puzzle state with n random valid moves.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.setState">
+<span class="sig-name descname"><span class="pre">setState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">newPuzzleConfiguration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.setState" title="Link to this definition"></a></dt>
+<dd><p>Set the puzzle to a new configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.solveAStar">
+<span class="sig-name descname"><span class="pre">solveAStar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heuristic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'manhattan'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.solveAStar" title="Link to this definition"></a></dt>
+<dd><p>Solve the puzzle using A* search with a specified heuristic.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.solveBFS">
+<span class="sig-name descname"><span class="pre">solveBFS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.solveBFS" title="Link to this definition"></a></dt>
+<dd><p>Solve the puzzle using Breadth-First Search (BFS).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.solveDFS">
+<span class="sig-name descname"><span class="pre">solveDFS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.solveDFS" title="Link to this definition"></a></dt>
+<dd><p>Solve the puzzle using Depth-First Search (DFS).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.startStateTracking">
+<span class="sig-name descname"><span class="pre">startStateTracking</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.startStateTracking" title="Link to this definition"></a></dt>
+<dd><p>Start tracking puzzle states.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.stopStateTracking">
+<span class="sig-name descname"><span class="pre">stopStateTracking</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.stopStateTracking" title="Link to this definition"></a></dt>
+<dd><p>Stop tracking puzzle states.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.updateHistory">
+<span class="sig-name descname"><span class="pre">updateHistory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.updateHistory" title="Link to this definition"></a></dt>
+<dd><p>Update the history of visited states.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Eight_Puzzle.EightPuzzle.EightPuzzle.updateZeroPosition">
+<span class="sig-name descname"><span class="pre">updateZeroPosition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Eight_Puzzle.EightPuzzle.EightPuzzle.updateZeroPosition" title="Link to this definition"></a></dt>
+<dd><p>Update the position of the empty tile (0) in the current configuration.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="CSDS_391 documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ryan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
