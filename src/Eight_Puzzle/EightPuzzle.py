@@ -1,6 +1,7 @@
 import random
 from collections import deque
 import heapq
+import math
 
 class EightPuzzle:
     """ Implementation of an Eight Puzzle with built-in self solving solutions. """
@@ -8,7 +9,21 @@ class EightPuzzle:
     def __init__(self, puzzleConfiguration=[[0,1,2],[3,4,5],[6,7,8]]):
         """Initialize the puzzle with a given configuration."""
         self.__puzzleConfiguration = puzzleConfiguration
-        self.__stateHistory = set()
+        '''
+        puzzleConfiguration[y][x]
+
+        .------------------------> (X)
+        |
+        |
+        |
+        |
+        |
+        |
+        |
+        v
+        (Y)
+
+        '''
         self.__x = None
         self.__y = None
         self.updateZeroPosition()
@@ -89,6 +104,13 @@ class EightPuzzle:
             nodes_explored += 1
             visited.add(self.hashConfiguration(current_state.__puzzleConfiguration))
             if current_state.isSolved():
+                print("DFS results:")
+                print(f"Nodes created during search: {nodes_explored}")
+                print(f"Solution length: {len(path)}")
+                # print("Move sequence:")
+                # for move in path:
+                #     print(f"move {move}")
+                print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
             if nodes_explored >= max_nodes:
                 return None
@@ -108,6 +130,13 @@ class EightPuzzle:
             current_state, path = queue.popleft()
             nodes_explored += 1
             if current_state.isSolved():
+                print("BFS results:")
+                print(f"Nodes created during search: {nodes_explored}")
+                print(f"Solution length: {len(path)}")
+                # print("Move sequence:")
+                # for move in path:
+                #     print(f"move {move}")
+                print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
             if nodes_explored >= max_nodes:
                 return None
@@ -183,6 +212,11 @@ class EightPuzzle:
             f, g, path, current_state = heapq.heappop(pq)
             nodes_explored += 1
             if current_state.isSolved():
+                print(f"Astar {heuristic} results:")
+                print(f"Solution found after exploring {nodes_explored} nodes")
+                print(f"Solution path length: {len(path)}")
+                # print("Path:", path)
+                print(f"Effective Branching Factor: {self.findEffectiveBranchingFactor(nodes_explored, len(path))}")
                 return path
             for move in current_state.getValidMoves():
                 new_state = current_state.copy()
@@ -194,6 +228,27 @@ class EightPuzzle:
                     heapq.heappush(pq, (new_g + new_h, new_g, path + [move], new_state))
                     visited.add(new_state_str)
         return None
+    
+    def findEffectiveBranchingFactor(self, nodes_generated, depth, tolerance=1e-6):
+
+        if depth == 0:
+            return 0  #Base case
+
+        # Start with an initial guess for b, we assume all nodes are distributed evenly
+        b_star = (nodes_generated / depth) ** (1 / depth)
+
+        for _ in range(depth - 1):
+            # Calculate the number of nodes at the current level 
+            current_level_nodes = b_star
+
+            # Subtract the number of nodes from the total nodes remaining
+            nodes_generated -= current_level_nodes
+
+            # Recalculate b* using the remaining nodes and depth
+            if nodes_generated > 0:
+                b_star = (nodes_generated / (depth - 1)) ** (1 / (depth - 1))
+        
+        return b_star
 
     def cmd(self, command):
         """Execute a command string for puzzle operations."""
@@ -264,3 +319,43 @@ class EightPuzzle:
     def copy(self):
         """Create and return a copy of the current puzzle configuration."""
         return EightPuzzle([row[:] for row in self.__puzzleConfiguration])
+    
+class EightPuzzleTest:
+    def testBranchingFactor(self, known_b_star, depth):
+        """
+        Test the `findEffectiveBranchingFactor` function with a tree that has
+        a known branching factor and depth.
+        """
+        # Calculate the total number of nodes analytically using geometric series
+        nodes_generated = self.calculateTotalNodes(known_b_star, depth)
+
+        # Use the findEffectiveBranchingFactor function to estimate b*
+        estimated_b_star = EightPuzzle().findEffectiveBranchingFactor(nodes_generated, depth)
+        
+        print(f"Known b*: {known_b_star}, Estimated b*: {estimated_b_star}, Nodes: {nodes_generated}")
+        
+    def calculateTotalNodes(self, b_star, depth):
+        """
+        Calculate the total number of nodes in a tree with branching factor `b_star` and depth `depth`
+        using the geometric series formula.
+        """
+        if b_star == 1:
+            return depth + 1  # Special case when b* = 1, it is a straight line tree
+        
+        return int((b_star**(depth + 1) - 1) / (b_star - 1))
+
+def main():
+    puzzle_test = EightPuzzleTest()
+
+    # Test the algorithm with known values for branching factor and depth
+    print("Running test cases for effective branching factor estimation...\n")
+    
+    puzzle_test.testBranchingFactor(2, 5)  # Known branching factor b* = 2, depth = 5
+    puzzle_test.testBranchingFactor(3, 4)  # Known branching factor b* = 3, depth = 4
+    puzzle_test.testBranchingFactor(4, 6)  # Known branching factor b* = 4, depth = 6
+    puzzle_test.testBranchingFactor(2, 3)  # Known branching factor b* = 2, depth = 3
+
+    print("\nTests completed.")
+
+if __name__ == "__main__":
+    main()
