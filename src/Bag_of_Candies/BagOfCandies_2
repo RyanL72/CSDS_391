@@ -1,0 +1,66 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def bayesian_update(draws, priors, bag_ratios):
+    num_hypotheses = len(priors)
+    posteriors = priors.copy()
+    beliefs_over_time = [posteriors.copy()]
+    
+    for draw in draws:
+        likelihoods = bag_ratios[:, 0] if draw == 'cherry' else bag_ratios[:, 1]
+        posteriors = likelihoods * posteriors
+        posteriors /= posteriors.sum()
+        beliefs_over_time.append(posteriors.copy())
+    
+    return np.array(beliefs_over_time)
+
+bag_ratios = np.array([
+    [1.0, 0.0],   # h1: 100% cherry
+    [0.75, 0.25], # h2: 75% cherry, 25% lime
+    [0.5, 0.5],   # h3: 50% cherry, 50% lime
+    [0.25, 0.75], # h4: 25% cherry, 75% lime
+    [0.0, 1.0]    # h5: 0% cherry, 100% lime
+])
+
+priors = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
+
+# Case 1: Simulating for h1 bag (100% cherry)
+draws_h1 = ['cherry'] * 6  # All candies drawn are cherry, representing an h1 bag
+beliefs_h1 = bayesian_update(draws_h1, priors, bag_ratios)
+
+# Case 2: Simulating for h2 bag (75% cherry, 25% lime)
+draws_h2 = ['cherry', 'lime', 'cherry', 'cherry', 'lime', 'cherry']  # h2 ratio simulation
+beliefs_h2 = bayesian_update(draws_h2, priors, bag_ratios)
+
+# Plot the results for both cases
+x = np.arange(len(draws_h1) + 1)
+
+# Plot for h1 bag (100% cherry)
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.plot(x, beliefs_h1[:, 0], label='h1: 100% cherry')
+plt.plot(x, beliefs_h1[:, 1], label='h2: 75% cherry, 25% lime')
+plt.plot(x, beliefs_h1[:, 2], label='h3: 50% cherry, 50% lime')
+plt.plot(x, beliefs_h1[:, 3], label='h4: 25% cherry, 75% lime')
+plt.plot(x, beliefs_h1[:, 4], label='h5: 0% cherry, 100% lime')
+plt.title('Belief Curves for h1 Bag (100% cherry)')
+plt.xlabel('Number of candy draws')
+plt.ylabel('Posterior Probability')
+plt.legend()
+plt.grid(True)
+
+# Plot for h2 bag (75% cherry, 25% lime)
+plt.subplot(1, 2, 2)
+plt.plot(x, beliefs_h2[:, 0], label='h1: 100% cherry')
+plt.plot(x, beliefs_h2[:, 1], label='h2: 75% cherry, 25% lime')
+plt.plot(x, beliefs_h2[:, 2], label='h3: 50% cherry, 50% lime')
+plt.plot(x, beliefs_h2[:, 3], label='h4: 25% cherry, 75% lime')
+plt.plot(x, beliefs_h2[:, 4], label='h5: 0% cherry, 100% lime')
+plt.title('Belief Curves for h2 Bag (75% cherry, 25% lime)')
+plt.xlabel('Number of candy draws')
+plt.ylabel('Posterior Probability')
+plt.legend()
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
