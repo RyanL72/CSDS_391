@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+priors = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
+likelihood_cherry = np.array([1.0, 0.75, 0.5, 0.25, 0.0])
+likelihood_lime = 1 - likelihood_cherry
+
+def bayesian_update(priors, draws):
+    posteriors = priors.copy()
+    beliefs_over_time = [posteriors.copy()]
+
+    for draw in draws:
+        likelihood = likelihood_cherry if draw == 'cherry' else likelihood_lime
+        posteriors = likelihood * posteriors
+        posteriors /= posteriors.sum()
+        beliefs_over_time.append(posteriors.copy())
+
+    return np.array(beliefs_over_time)
+
+draws = ['cherry', 'lime', 'cherry', 'cherry', 'lime', 'cherry']
+beliefs = bayesian_update(priors, draws)
+
+x = np.arange(len(draws) + 1)
+plt.plot(x, beliefs[:, 0], label='h1: 100% cherry')
+plt.plot(x, beliefs[:, 1], label='h2: 75% cherry, 25% lime')
+plt.plot(x, beliefs[:, 2], label='h3: 50% cherry, 50% lime')
+plt.plot(x, beliefs[:, 3], label='h4: 25% cherry, 75% lime')
+plt.plot(x, beliefs[:, 4], label='h5: 100% lime')
+
+plt.xlabel('Number of candy draws')
+plt.ylabel('Posterior Probability')
+plt.title('Beliefs over Time with Candy Draws')
+plt.legend()
+plt.grid(True)
+plt.show()
